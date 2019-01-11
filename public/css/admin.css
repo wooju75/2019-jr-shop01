@@ -12,3 +12,5 @@
 #page1 input {width:30%;}
 #page1 select {width:15%;}
 #page1 button {margin-left:10px;}
+#homes {margin-top:2rem;}
+#homes > li {border-bottom:1px solid #eee; margin-bottom:0.5rem;}
