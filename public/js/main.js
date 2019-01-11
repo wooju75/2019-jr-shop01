@@ -1,3 +1,15 @@
+// Fidebase Init
+var config = {
+	apiKey: "AIzaSyDIzp4n1G1f_Xa_DVqhxeojAWCjcDPLHwE",
+	authDomain: "wooju-shop01.firebaseapp.com",
+	databaseURL: "https://wooju-shop01.firebaseio.com",
+	projectId: "wooju-shop01",
+	storageBucket: "wooju-shop01.appspot.com",
+	messagingSenderId: "428495628233"
+};
+firebase.initializeApp(config);
+
+
 //top_nav hover이벤트
 $(".top_icon").mouseenter(function(){
  $(this).children("img").css({"opacity":.7});
@@ -24,3 +36,6 @@ $(".rt_cont .fa-close").click(function(){
 	$(this).css({"display":"none"});
 	}); 
 });
+
+//메인 네비 / .navs
+//firebase.database().ref("root/test").push({test:"테스트"}).key;
