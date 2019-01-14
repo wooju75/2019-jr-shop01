@@ -13,7 +13,7 @@ var db = firebase.database();
 db.ref("root/home").on("child_added", homeAdd);
 function homeAdd(data){ //homeAdd의 data를 받아서
  var html = `
- <li>
+ <li class="rt_arrow">
   <a href="${data.val().link}" target="${data.val().target}">${data.val().title}</a>
  </li>`;
  $(".nav_sub").eq(0).append(html);
