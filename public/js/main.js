@@ -24,10 +24,10 @@ function homeAdd(data){ //homeAdd의 data를 받아서
 
 // 카테고리 SHOP 생성 - Ajax/json 통신
 $.ajax({
-	type: "get",
-	url: "../json/shop.json",
-	data: {},
-	dataType: "json",
+	type: "get", //get 타입은 문서상에서 안써도 자동으로 기본이 get타입이다
+	url: "../json/shop.json", //나의 상위 폴더 주소
+	data: {}, //안보내니까 생략가능
+	dataType: "json", //데이터 타입은 제이슨방식으로 내가 보내겠다
 	success: function(data) {
 		var html = `<div class="shop_cates wrap clear">`;
 		for(var i=0; i<data.cates.length; i++){
