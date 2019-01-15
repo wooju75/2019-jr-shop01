@@ -1,3 +1,4 @@
+const log = console.log;
 // Fidebase Init
 var config = {
 	apiKey: "AIzaSyDIzp4n1G1f_Xa_DVqhxeojAWCjcDPLHwE",
@@ -10,6 +11,8 @@ var config = {
 firebase.initializeApp(config);
 //Firebase Init
 var db = firebase.database();
+
+//카테고리 HOME 생성
 db.ref("root/home").on("child_added", homeAdd);
 function homeAdd(data){ //homeAdd의 data를 받아서
  var html = `
@@ -18,6 +21,52 @@ function homeAdd(data){ //homeAdd의 data를 받아서
  </li>`;
  $(".nav_sub").eq(0).append(html);
 }
+
+// 카테고리 SHOP 생성 - Ajax/json 통신
+$.ajax({
+	type: "get",
+	url: "../json/shop.json",
+	data: {},
+	dataType: "json",
+	success: function(data) {
+		var html = `<div class="shop_cates wrap clear">`;
+		for(var i=0; i<data.cates.length; i++){
+			html += `<ul>
+			<li class="shop_cate_tit">${data.cates[i].tit}</li>
+			<li>
+				<ul class="shop_cate_names">`;
+				for(var j=0; j<data.cates[i].data.length; j++) {
+					html += `
+					<li class="shop_cate_name rt_arrow">
+					<a href="${data.cates[i].data[j].link}" target="${data.cates[i].data[j].target}">
+					${data.cates[i].data[j].name}</a>
+					</li>`;
+				}
+			html +=	`</ul></li></ul>`;
+		}
+		html += `</div><ul class="shop_prds wrap clear">`;
+		for(var i=0; i<data.prds.length; i++) {
+			html += `<li class="shop_prd">
+				<a href="${data.prds[i].link}" target="${data.prds[i].target}">
+				<img src="${data.prds[i].src}" class="img">
+				</a>
+			</li>`;
+		}
+		html += `</ul>`;
+		$(".nav_sub").eq(1).append(html);
+	},
+	error: function(xhr) {
+		log(xhr);
+	}
+});
+
+
+// window.resize()구현 / .nav_sub 위치 잡기
+$(window).resize(function(){
+	$(".nav_sub").each(function(){
+		
+	});
+}).trigger("resize");
 
 //top_nav hover이벤트
 $(".top_icon").mouseenter(function(){
@@ -29,7 +78,7 @@ $(".top_icon").mouseleave(function(){
 
 //nav 이벤트 (nav_sub show/hide)
 $(".nav").mouseenter(function(){
- $(this).children(".nav_sub").css({"display":"block", "opacity":0}).stop().animate({"opacity":1, "top":"45px"}); //.nav에 mouseenter하면 이것의 자식중.nav_sub의 css를 display:block, opacity:0으로 만들고 이벤트를 멈춘다음 animate를 실행한다
+ $(this).children(".nav_sub").css({"display":"block", "opacity":0}).stop().animate({"opacity":1, "top":"45px"},200); //.nav에 mouseenter하면 이것의 자식중.nav_sub의 css를 display:block, opacity:0으로 만들고 이벤트를 멈춘다음 animate를 실행한다
 });
 $(".nav").mouseleave(function(){
   $(this).children(".nav_sub").stop().animate({"opacity":0, "top":"80px"},200, function(){//현재 보여지고 있는 애들은 사라지게 한다
