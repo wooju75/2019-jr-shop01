@@ -13,17 +13,23 @@
 	<link rel="stylesheet" href="../css/blog.css">
 	<script src="../js/jquery-3.3.1.min.js"></script>
 	<script src="../js/imagesloaded.pkgd.min.js"></script>
-	<script src="../js/masonry.pkgd.min.js"></script> <!-- js는 제이쿼리가 제일 위에 있어야함 맨 밑에 있는게 제이쿼리랑 연동 되어야하기 때문에-->
+	<script src="../js/masonry.pkgd.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/w3.js"></script>
 </head>
 <body>
-  <div w3-include-html="header.html"></div>
-	<div class="page">
-		<div class="wr_wrap">
+		<div w3-include-html="header.html"></div>
+		<div class="page">
+			<div class="wr_wrap">
+				<input type="text" id="mc_in" class="w3-input w3-border w3-show-inline-block" placeholder="메인카테고리 이름">
+				<button id="mc_save" class="w3-button w3-indigo">저장</button>
+				<select id="mc_sel" class="w3-select w3-border w3-show-inline-block">
+				</select>
+			</div>
+			<ul class="cont_wrap">
+	
+			</ul>
 		</div>
-		<ul class="cont_wrap"></ul>
-	</div>
 
 	<script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
 	<script src="../js/blog.js"></script>

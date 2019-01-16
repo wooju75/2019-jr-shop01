@@ -19,3 +19,6 @@ div,ul,li,p,h1,h2,h3,h4,h5{margin: 0; padding: 0; box-sizing: border-box; list-s
 .hand{cursor: pointer;}
 .hover{cursor: pointer;}
 .hover:hover{opacity: .7;}
+
+.w3-input {padding: 3px;}
+button {margin-top: -3px;}
