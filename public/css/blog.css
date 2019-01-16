@@ -1,0 +1,5 @@
+@import 'base.css';
+
+.wrap {max-width:1400px; margin:auto;}
+
+.page {max-width:1200px; margin:3rem auto;}
