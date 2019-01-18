@@ -1,4 +1,36 @@
 const log = console.log;
+//$.ajax() 객체화
+var Ajax = (function(){
+	function Ajax(url, fn, opts) {
+		var obj = this;
+		this.url = url;
+		this.fn = fn;
+		if(opts) {
+			if(opts.type) this.opts.type = opts.type; 
+			if(opts.dataType) this.opts.dataType = opts.dataType; 
+			if(opts.data) this.opts.data = opts.data;
+		}
+		else {
+			this.opts = {};
+			this.opts.type = "get";
+			this.opts.dataType = "json";
+			this.opts.data = {};	
+		}
+		$.ajax({
+			type: obj.opts.type,
+			url: obj.url,
+			data: obj.opts.data,
+			dataType: obj.opts.dataType,
+			success: obj.fn,
+			error: function(xhr, status, error) {
+				console.log(xhr, status, error);
+			}
+		}); 
+	}
+	return Ajax;
+}());
+
+
 // Fidebase Init
 var config = {
 	apiKey: "AIzaSyDIzp4n1G1f_Xa_DVqhxeojAWCjcDPLHwE",
@@ -12,8 +44,13 @@ firebase.initializeApp(config);
 //Firebase Init
 var db = firebase.database();
 
+mainInit();
+function mainInit() {
+	db.ref("root/home").on("child_added", homeAdd);
+	db.ref("root/blog").on("child_added", blogAdd);
+}
+
 //카테고리 HOME 생성
-db.ref("root/home").on("child_added", homeAdd);
 function homeAdd(data) {
 	var html = `
 	<li class="rt_arrow">
@@ -22,59 +59,73 @@ function homeAdd(data) {
 	$(".nav_sub").eq(0).append(html);
 }
 //카테고리 BLOG 생성
-db.ref("root/blog").on("child_added", blogAdd);
 function blogAdd(data) {
 	var html = `<ul id="${data.key}" class="grid-item">
 		<li class="grid-tit">${data.val().name}</li>
 	</ul>`;
 	$(".grid").append(html);
+	db.ref("root/blog/"+data.key+"/sub").once("value", function(sub){
+		sub.forEach(function(v, i){
+			html = `
+			<li class="rt_arrow" id="${v.key}">
+				<a href="${v.val().link}" target="${v.val().target}">${v.val().name}</a>
+			</li>`;
+			$("#"+data.key).append(html);
+		});
+	});
 }
-/*
-$('.grid').masonry({
-  itemSelector: '.grid-item',
-  columnWidth: '.grid-sizer',
-  percentPosition: true
-});
-*/
 
 // 카테고리 SHOP 생성 - Ajax/json 통신
-$.ajax({
-	type: "get",
-	url: "../json/shop.json",
-	dataType: "json",
-	success: function (data) {
-		var html = `<div class="shop_cates wrap clear">`;
-		for(var i=0; i<data.cates.length; i++) {
+var shopAjax = function(data) {
+	var html = `<div class="shop_cates wrap clear">`;
+	for(var i=0; i<data.cates.length; i++) {
+		html += `
+		<ul>
+			<li class="shop_cate_tit">${data.cates[i].tit}</li>
+			<li>
+				<ul>`;
+		for(var j=0; j<data.cates[i].data.length; j++) {
 			html += `
-			<ul>
-				<li class="shop_cate_tit">${data.cates[i].tit}</li>
-				<li>
-					<ul>`;
-			for(var j=0; j<data.cates[i].data.length; j++) {
-				html += `
-				<li class="shop_cate_name rt_arrow">
-				<a href="${data.cates[i].data[j].link}" target="${data.cates[i].data[j].target}">
-				${data.cates[i].data[j].name}</a>
-				</li>`;
-			}
-			html += `
-					</ul>
-				</li>
-			</ul>`;
-		}
-		html += `</div>`;
-		html += `<ul>`;
-		for(i=0; i<data.prds.length; i++) {
-			html += `
-			<li class="shop_prd"><a href="${data.prds[i].link}" target="${data.prds[i].target}">
-			<img src="${data.prds[i].src}" class="img">
-			</a>
+			<li class="shop_cate_name rt_arrow">
+			<a href="${data.cates[i].data[j].link}" target="${data.cates[i].data[j].target}">
+			${data.cates[i].data[j].name}</a>
 			</li>`;
 		}
-		html += `</ul>`;
-		$(".nav_sub").eq(1).append(html);
+		html += `
+				</ul>
+			</li>
+		</ul>`;
 	}
-});
+	html += `</div>`;
+	html += `<ul>`;
+	for(i=0; i<data.prds.length; i++) {
+		html += `
+		<li class="shop_prd"><a href="${data.prds[i].link}" target="${data.prds[i].target}">
+		<img src="${data.prds[i].src}" class="img">
+		</a>
+		</li>`;
+	}
+	html += `</ul>`;
+	$(".nav_sub").eq(1).append(html);
+};
+new Ajax("../json/shop.json", shopAjax);
+
+// 카테고리 PORTFOLIO 생성 - Ajax/json 통신
+var portAjax = function(data) {
+	for(var i in data.ports) {
+		var html = `
+		<li class="rt_arrow">
+			<a href="${data.ports[i].link}" target="${data.ports[i].target}">
+			${data.ports[i].name}</a>
+		</li>`;
+		$(".nav_sub").eq(3).append(html);
+	}
+}
+new Ajax("../json/port.json", portAjax);
+
+
+
+
 
 // window.resize()구현 
 $(window).resize(function(){

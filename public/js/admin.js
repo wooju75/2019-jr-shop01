@@ -1,8 +1,21 @@
- //HTML Header Include
+// HTML Header Include
 w3.includeHTML(function(){
- $(".navs li").click(function(){
-  location.href = $(this).data("src");
- });
+	var locName = document.URL;
+	var fullName =locName.substring(locName.lastIndexOf("/") + 1, document.URL.length);
+	var fName = fullName.split(".");
+	var loc = ["admin", "shop", "blog", "port"];
+	var index = 0;
+	for(var i in loc){
+		if(loc[i] == fName[0]) {
+			index = i;
+			break;
+		} 
+	}
+	$(".navs li").css({"color":"#aaa", "background-color":"transparent"});
+	$(".navs li").eq(index).css({"color":"#fff", "background-color":"#444"});
+	$(".navs li").click(function(){
+		location.href = $(this).data("src");
+	});
 });
 
 
@@ -18,21 +31,10 @@ var config = {
 };
 firebase.initializeApp(config);
 
-$(".navs li").click(function(){
-	location.href = $(this).data("src");
-});
-
 // 공통 변수
 var db = firebase.database();	//firebase의 데이터베이스 객체
 var ref = new Array();
 var key = "";
-
-// 네비게이션 구현
-$(".navs li").on("click", function(){
-	$(".navs li").css({"color":"#aaa", "background-color":"transparent"});
-	$(this).css({"color":"#fff", "background-color":"#444"});
-});
-$(".navs li").eq(0).trigger("click");
 
 // 페이지 시작과 동시에 homeInit()실행하고, FB이벤트 콜백함수를 생성한다.
 homeInit();
@@ -122,6 +124,14 @@ function dataChg(obj) {
 		target: $li.find(".home_target").val()
 	});
 }
+
+
+
+
+
+
+
+
 
 
 

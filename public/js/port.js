@@ -1,10 +1,22 @@
- //HTML Header Include
+// HTML Header Include
 w3.includeHTML(function(){
- $(".navs li").click(function(){
-  location.href = $(this).data("src");
- });
+	var locName = document.URL;
+	var fullName =locName.substring(locName.lastIndexOf("/") + 1, document.URL.length);
+	var fName = fullName.split(".");
+	var loc = ["admin", "shop", "blog", "port"];
+	var index = 0;
+	for(var i in loc){
+		if(loc[i] == fName[0]) {
+			index = i;
+			break;
+		} 
+	}
+	$(".navs li").css({"color":"#aaa", "background-color":"transparent"});
+	$(".navs li").eq(index).css({"color":"#fff", "background-color":"#444"});
+	$(".navs li").click(function(){
+		location.href = $(this).data("src");
+	});
 });
-
 
 // database = CRUD(Create/Read/Update/Delete)
 // Fidebase Init
@@ -18,9 +30,6 @@ var config = {
 };
 firebase.initializeApp(config);
 
-$(".navs li").click(function(){
-	location.href = $(this).data("src");
-});
 
 // 공통 변수
 var db = firebase.database();	//firebase의 데이터베이스 객체
@@ -122,6 +131,14 @@ function dataChg(obj) {
 		target: $li.find(".home_target").val()
 	});
 }
+
+
+
+
+
+
+
+
 
 
 
