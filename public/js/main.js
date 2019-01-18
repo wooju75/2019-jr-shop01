@@ -97,11 +97,11 @@ var shopAjax = function(data) {
 		</ul>`;
 	}
 	html += `</div>`;
-	html += `<ul>`;
+	html += `<ul class="shop_prds">`;
 	for(i=0; i<data.prds.length; i++) {
 		html += `
-		<li class="shop_prd"><a href="${data.prds[i].link}" target="${data.prds[i].target}">
-		<img src="${data.prds[i].src}" class="img">
+		<li class="shop_prd ovhide"><a href="${data.prds[i].link}" target="${data.prds[i].target}">
+		<img src="${data.prds[i].src}" class="img size_ani">
 		</a>
 		</li>`;
 	}
@@ -123,6 +123,15 @@ var portAjax = function(data) {
 }
 new Ajax("../json/port.json", portAjax);
 
+// 메인 좌측 네비 - lefts - Ajax/json 통신
+new Ajax("../json/left.json", leftAjax);
+function leftAjax(data){
+  var html; 
+	for(var i in data.lefts){
+	html = `<li class="rt_arrow">${data.lefts[i].name}</li>`;
+	$(".left").append(html);
+ }
+}
 
 
 
