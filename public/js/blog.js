@@ -131,7 +131,6 @@ $("#mc_sel").change(function(){
 
 /***** 서브카테고리 *****/
 function scAdd(obj){
-	log("저장!");
 	ref = db.ref("root/blog/"+key+"/sub");
 	if($("#sc_name").val() == "") {
 		alert("제목을 입력하세요.");
