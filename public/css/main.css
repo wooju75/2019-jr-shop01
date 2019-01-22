@@ -28,6 +28,56 @@ body {min-height:3000px;}
 .cycle-pager span.cycle-pager-active { color: rgb(224, 47, 100);}
 .cycle-pager > * { cursor: pointer;}
 
+/***** 애니메이션 키프레임 *****/
+.aniset {animation-fill-mode:forwards; animation-timing-function:ease-in-out;}
+@keyframes leftShow {
+	0% {transform:translateX(-200px); opacity:0;}
+	100% {transform:translateX(0); opacity:1;}
+}
+@keyframes leftHide {
+	0% {transform:translateX(0); opacity:1;}
+	100% {transform:translateX(-200px); opacity:0;}
+}
+@keyframes rightShow {
+	0% {transform:translateX(200px); opacity:0;}
+	100% {transform:translateX(0); opacity:1;}
+}
+@keyframes rightHide {
+	0% {transform:translateX(0); opacity:1;}
+	100% {transform:translateX(200px); opacity:0;}
+}
+@keyframes topShow {
+	0% {transform:translateY(-200px); opacity:0;}
+	100% {transform:translateY(0); opacity:1;}
+}
+@keyframes topHide {
+	0% {transform:translateY(0); opacity:1;}
+	100% {transform:translateY(-200px); opacity:0;}
+}
+@keyframes bottomShow {
+	0% {transform:translateY(200px); opacity:0;}
+	100% {transform:translateY(0); opacity:1;}
+}
+@keyframes bottomHide {
+	0% {transform:translateY(0); opacity:1;}
+	100% {transform:translateY(200px); opacity:0;}
+}
+@keyframes scaleUp {
+	0% {transform:scale(1); opacity:0;}
+	100% {transform:scale(1.05); opacity:1;}
+}
+@keyframes scaleDn {
+	0% {transform:scale(1.05); opacity:1;}
+	100% {transform:scale(1); opacity:0;}
+}
+
+/***** Hover set *****/
+.hov_mask {background-color: rgba(0,0,0,0.5); position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
+.hov_mask > li {position: absolute;}
+.hov_mask > li:nth-child(1) {width: 90%; border-top:1px solid #fff; left: 50%; top: 10%; transform: translateX(-50%);}
+.hov_mask > li:nth-child(2) {width: 90%; border-top: 1px solid #fff; left: 50%; bottom: 10%; transform: translateX(-50%);}
+.hov_mask > li:nth-child(3) {height: 80%;  border-left:1px solid #fff; left: 5%; top: 50%; transform: translateY(-50%);}
+.hov_mask > li:nth-child(4) {height: 80%;  border-right:1px solid #fff; right: 5%; top: 50%; transform: translateY(-50%);}
 
 /***** 상단네비 / top_navs *****/
 .logo {float:left;}
@@ -81,3 +131,12 @@ body {min-height:3000px;}
 .bans {width:82%; float:right; position:relative; overflow: hidden;}
 .ban {width:100%; position:relative;}
 .ban > li {width:100%;}
+.ban > li > div {position: absolute; top:50%; left:10%; font-size:3rem; color:#fff; z-index:1000; opacity:0;}
+.ban > li > div:nth-child(2) {top:65%;}
+
+/***** 대표상품 / favs *****/
+.favs {margin-top: 1rem;}
+.fav {width: 49.5%; float: left; position: relative;}
+.fav:first-child {margin-right: 0.5%;}
+.fav:last-child {margin-left: 0.5%;}
+
