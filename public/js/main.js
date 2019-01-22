@@ -337,31 +337,43 @@ function vertShow() {
 
 /***** hover Animation *****/
 $(".hov_ani").each(function(){
- $(this).css({"position":"relative"});
+	$(this).css({"position":"relative"});
 	$(this).append(`
-	<ul class="hov_mask">
-   <li></li>
-   <li></li>
-   <li></li>
-   <li></li>
-  </ul>`
- );
- $(this).mouseenter(function(){
-	var speed = 250;
-	var $mask = $(this).children(".hov_mask")
-	$mask.fadeIn(speed);
-	$mask.children("li").eq(0).stop().animate({"width":"90%"},speed);
-	$mask.children("li").eq(1).stop().animate({"width":"90%"},speed);
-	$mask.children("li").eq(2).stop().animate({"height":"80%"},speed);
-	$mask.children("li").eq(3).stop().animate({"height":"80%"},speed);
- });
- $(this).mouseleave(function(){
-	var speed = 125;
-	var $mask = $(this).children(".hov_mask")
-	$mask.fadeOut(speed);
-	$mask.children("li").eq(0).stop().animate({"width":"50%"},speed);
-	$mask.children("li").eq(1).stop().animate({"width":"50%"},speed);
-	$mask.children("li").eq(2).stop().animate({"height":"50%"},speed);
-	$mask.children("li").eq(3).stop().animate({"height":"50%"},speed);
- });
+		<ul class="hov_mask" style="display:none">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	`);
+	$(this).mouseenter(function(){
+		var speed = 250;
+		var $mask = $(this).children(".hov_mask");
+		$mask.fadeIn(speed);
+		$mask.children("li").eq(0).stop().animate({"width":"90%"}, speed);
+		$mask.children("li").eq(1).stop().animate({"width":"90%"}, speed);
+		$mask.children("li").eq(2).stop().animate({"height":"80%"}, speed);
+		$mask.children("li").eq(3).stop().animate({"height":"80%"}, speed);
+	});
+	$(this).mouseleave(function(){
+		var speed = 125;
+		var $mask = $(this).children(".hov_mask");
+		$mask.fadeOut(speed);
+		$mask.children("li").eq(0).stop().animate({"width":"50%"}, speed);
+		$mask.children("li").eq(1).stop().animate({"width":"50%"}, speed);
+		$mask.children("li").eq(2).stop().animate({"height":"50%"}, speed);
+		$mask.children("li").eq(3).stop().animate({"height":"50%"}, speed);
+	});
+});
+$(".ghost_bt").each(function(){
+	$(".ghost_bt").mouseenter(function(){
+		$(this).children("div").css({"transition":"transform 0.2s", "transform":"scale(1)"});
+	});
+	$(".ghost_bt").mouseleave(function(){
+		$(this).children("div").css({"transition":"transform 0.1s", "transform":"scale(0)"});
+	});
+});
+$(".ghost_bt").click(function(){
+  $(".ghost_bt").css({"background-color":"inherit", "color":"inherit", "border":""});
+	$(this).css({"background-color":"#333", "color":"#fff", "border":"1px solid #333"});
 });
