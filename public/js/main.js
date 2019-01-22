@@ -1,4 +1,9 @@
 const log = console.log;
+//모든 이미지가 서버로부터 전송이 완료되면 resize 이벤트를 한번 실행하여
+//이미지 높이를 계산하게 한다.
+$("body").imagesLoaded(function(){
+ $(window).trigger("resize");
+});
 //$.ajax() 객체화
 var Ajax = (function(){
 	function Ajax(url, fn, opts) {
@@ -332,7 +337,7 @@ function vertShow() {
 
 /***** hover Animation *****/
 $(".hov_ani").each(function(){
- $(this).parent().addClass("rel")
+ $(this).css({"position":"relative"});
 	$(this).append(`
 	<ul class="hov_mask">
    <li></li>
@@ -341,4 +346,22 @@ $(".hov_ani").each(function(){
    <li></li>
   </ul>`
  );
+ $(this).mouseenter(function(){
+	var speed = 250;
+	var $mask = $(this).children(".hov_mask")
+	$mask.fadeIn(speed);
+	$mask.children("li").eq(0).stop().animate({"width":"90%"},speed);
+	$mask.children("li").eq(1).stop().animate({"width":"90%"},speed);
+	$mask.children("li").eq(2).stop().animate({"height":"80%"},speed);
+	$mask.children("li").eq(3).stop().animate({"height":"80%"},speed);
+ });
+ $(this).mouseleave(function(){
+	var speed = 125;
+	var $mask = $(this).children(".hov_mask")
+	$mask.fadeOut(speed);
+	$mask.children("li").eq(0).stop().animate({"width":"50%"},speed);
+	$mask.children("li").eq(1).stop().animate({"width":"50%"},speed);
+	$mask.children("li").eq(2).stop().animate({"height":"50%"},speed);
+	$mask.children("li").eq(3).stop().animate({"height":"50%"},speed);
+ });
 });
