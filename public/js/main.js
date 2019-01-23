@@ -377,3 +377,17 @@ $(".ghost_bt").click(function(){
   $(".ghost_bt").css({"background-color":"inherit", "color":"inherit", "border":""});
 	$(this).css({"background-color":"#333", "color":"#fff", "border":"1px solid #333"});
 });
+
+/***** .prds 상품 애니메이션 *****/
+$(".prd").mouseenter(prdHover);
+$(".prd").mouseleave(prdLeave);
+function prdHover(){
+ var $mask = $(this).find(".prd_mask");
+ var $icon = $(this).find(".prd_icon");
+ $mask.stop().fadeIn(200);
+};
+function prdLeave(){
+ var $mask = $(this).find(".prd_mask");
+ var $icon = $(this).find(".prd_icon");
+ $mask.stop().fadeOut(200);
+};
